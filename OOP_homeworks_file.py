@@ -29,9 +29,16 @@ class Lecturer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
-        self.general = lambda grades : len(grades) / grades.items
 
-
+    def general_values(self):
+        grades = self.grades.values()
+        point = sum(sum(i) for i in grades)
+        length = sum(len(i) for i in grades)
+        exit_point = point / length
+        return round(exit_point,1)
+    def __str__(self):
+        speath = f'Имя: {self.name} \nФамилия: {self.surname}\nСредняя оценка за лекции: {self.general_values()}'
+        return speath
 class Reviewer(Mentor):
     def __init__(self, name, surname):
         super().__init__(name, surname)
@@ -63,10 +70,12 @@ andrew.rate_lectur(anna, "Git", 9)
 andrew.rate_lectur(anna, "Git", 7)
 gena.rate_hw(andrew, "Git", 9)
 
-# print(anna.grades)
-print(anna.grades.values())
-# print(gena)
-# print((lambda general : anna.general)(anna.general))
+
+# print(round(anna.general_values(),1))
+# print(anna.grades.values())
+print(gena)
+print(anna)
+
 
 # best_student = Student('Ruoy', 'Eman', 'your_gender')
 # best_student.courses_in_progress += ['Python']
