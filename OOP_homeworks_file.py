@@ -9,9 +9,6 @@ class Student:
         self.grades = {}
         Student.student_list.append(self)
 
-    def course_value(self, stuedent_list, course_name):
-        if 
-
     def rate_lectur(self, lectur, course, grade):
         if isinstance(lectur, Lecturer) and course in lectur.courses_attached:
             if course in lectur.grades:
@@ -26,7 +23,7 @@ class Student:
         point = sum(sum(i) for i in grades)
         length = sum(len(i) for i in grades)
         exit_point = point / length
-        return round(exit_point,1)
+        return round(exit_point, 1)
 
     def __str__(self):
         delimiter = ', '
@@ -40,9 +37,11 @@ class Mentor:
         self.courses_attached = []
 
 class Lecturer(Mentor):
+    lectorur_list = []
     def __init__(self, name, surname):
         super().__init__(name, surname)
         self.grades = {}
+        Lecturer.lectorur_list.append(self)
 
     def general_values(self):
         grades = self.grades.values()
@@ -78,15 +77,14 @@ class Number:
 
     def __lt__(self, other):
         return self.__value < other.__value
-
-#---------------------------------------------------------
+#--------------------------------------------------------- ИНИЦИАЛИЗАЦИЯ ЭКЗЕМПЛЯРОВ КЛАССОВ
 andrew_st = Student("Andrew", "Bulkin", "male")
 marina_st = Student("Marina", "Stepanova", "female")
 anna_le = Lecturer("Anna", "Bragina")
 valery_le = Lecturer("Valery", "Zavinin")
 gena_rw = Reviewer("Gennadiy", "Lonin")
 olya_rw = Reviewer("Olya", "Suro")
-#---------------------------------------------------------
+#--------------------------------------------------------- ДОБАВЛЯЕМ ПРЕДМЕТЫ
 andrew_st.courses_in_progress += ['Git', 'Python']
 marina_st.courses_in_progress += ['Git', 'OOP']
 andrew_st.finished_courses += ['OOP']
@@ -95,8 +93,7 @@ anna_le.courses_attached += ['Git']
 valery_le.courses_attached += ['Git', 'OOP']
 gena_rw.courses_attached += ['Git']
 olya_rw.courses_attached += ['Git', 'Python']
-
-
+#--------------------------------------------------------- ВЫСТАВЛЯЕМ ОЦЕНКИ
 andrew_st.rate_lectur(anna_le, "Git", 10)
 andrew_st.rate_lectur(anna_le, "Git", 9)
 andrew_st.rate_lectur(anna_le, "Git", 7)
@@ -104,14 +101,14 @@ marina_st.rate_lectur(valery_le, "Git", 10)
 marina_st.rate_lectur(valery_le, "Git", 10)
 marina_st.rate_lectur(valery_le, "Git", 10)
 gena_rw.rate_hw(andrew_st, "Git", 9)
-gena_rw.rate_hw(andrew_st, "Git", 8)
+olya_rw.rate_hw(andrew_st, "Python", 4)
 gena_rw.rate_hw(marina_st, "Git", 10)
-gena_rw.rate_hw(marina_st, "Git", 10)
-#---------------------------------------------------------
+gena_rw.rate_hw(marina_st, "OOP", 10)
+#--------------------------------------------------------- ЗАДАНИЕ № 3
 # print(gena_rw)
 # print(anna_le)
 # print(andrew_st)
-#---------------------------------------------------------
+#--------------------------------------------------------- СРАВНИВАЕМ ПО ОЦЕНКАМ
 # test_1 = Number(andrew_st.home_works_general())
 # test_2 = Number(marina_st.home_works_general())
 # print(test_2 > test_1)
@@ -119,8 +116,33 @@ gena_rw.rate_hw(marina_st, "Git", 10)
 # print(Number(andrew_st.home_works_general()) > Number(marina_st.home_works_general()))
 
 # print(Number(anna_le.general_values()) < Number(valery_le.general_values()))
-#---------------------------------------------------------
+#--------------------------------------------------------- ЗАДАНИЕ № 4 ДЛЯ СТУДЕНТОВ
+def general_value_students(student_list, course_name):
+    general = []
+    for student in student_list:
+        if course_name in student.grades:
+            general.append(student.grades.get(course_name))
 
-print(Student.student_list)
+    point = sum(sum(i) for i in general)
+    length = sum(len(i) for i in general)
+    exit_point = point / length
+
+    print(f'Средняя оценка по предмету {course_name} : {round(exit_point,1)}')
+
+# test = general_value_students(Student.student_list, 'Git')
+#--------------------------------------------------------- ЗАДАНИЕ № 4 ДЛЯ ЛЕКТОРОВ
+def general_value_lecturer(lectorur_list, course_name):
+    general = []
+    for lectorer in lectorur_list:
+        if course_name in lectorer.grades:
+            general.append(lectorer.grades.get(course_name))
+
+    point = sum(sum(i) for i in general)
+    length = sum(len(i) for i in general)
+    exit_point = point / length
+
+    print(f'Средняя оценка по предмету {course_name} : {round(exit_point,1)}')
+
+# test = general_value_lecturer(Lecturer.lectorur_list, 'Git')
 
 
